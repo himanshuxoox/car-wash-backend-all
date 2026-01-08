@@ -20,3 +20,6 @@ spring:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+
+jwt:
+  secret: my-super-secure-jwt-secret-key-which-is-32-bytes

@@ -1,4 +1,4 @@
-package com.carwash.api_gateway;
+package com.carwash.apigateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

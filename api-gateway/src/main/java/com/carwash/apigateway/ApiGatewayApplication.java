@@ -1,4 +1,4 @@
-package com.carwash.api_gateway;
+package com.carwash.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

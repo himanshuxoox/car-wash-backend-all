@@ -15,5 +15,5 @@ server:
   port: 8081
 
 jwt:
-  secret: carwash-secret-key-very-secure-1234567890
+  secret: ZmluYW5jZS1hcHAtamF3dC1zZWNyZXQtbXlzaWduYXR1cmU=
   expiration: 86400000 # 1 day

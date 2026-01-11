@@ -6,6 +6,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -24,7 +25,6 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getPath().toString();
 
-        // ✅ Public endpoints
         if (path.startsWith("/auth")) {
             return chain.filter(exchange);
         }
@@ -43,18 +43,23 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         try {
             Claims claims = jwtUtil.validateToken(token);
 
-            // (Optional) add user info to headers
-            exchange.getRequest().mutate()
+            ServerHttpRequest mutatedRequest = exchange.getRequest()
+                    .mutate()
                     .header("X-User-Phone", claims.getSubject())
                     .build();
+
+            ServerWebExchange mutatedExchange = exchange.mutate()
+                    .request(mutatedRequest)
+                    .build();
+
+            return chain.filter(mutatedExchange);
 
         } catch (Exception e) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
-
-        return chain.filter(exchange);
     }
+
 
     @Override
     public int getOrder() {

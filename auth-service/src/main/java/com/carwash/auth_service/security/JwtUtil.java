@@ -3,6 +3,7 @@ package com.carwash.auth_service.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,7 +11,7 @@ import io.jsonwebtoken.Jwts;
 import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
-
+@Profile("!dummy")
 @Component
 public class JwtUtil {
 

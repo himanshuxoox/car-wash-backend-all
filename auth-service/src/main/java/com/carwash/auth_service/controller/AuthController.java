@@ -1,71 +1,101 @@
-    package com.carwash.auth_service.controller;
+package com.carwash.auth_service.controller;
 
-    import com.carwash.auth_service.domain.User;
-    import com.carwash.auth_service.dto.AuthRequest;
-    import com.carwash.auth_service.dto.AuthResponse;
-    import com.carwash.auth_service.dto.UserResponse;
-    import com.carwash.auth_service.security.FirebaseTokenVerifier;
-    import com.carwash.auth_service.security.JwtUtil;
-    import com.carwash.auth_service.service.UserService;
-    import com.google.firebase.auth.FirebaseToken;
-    import org.springframework.web.bind.annotation.*;
+import com.carwash.auth_service.domain.User;
+import com.carwash.auth_service.dto.*;
+import com.carwash.auth_service.security.JwtUtil;
+import com.carwash.auth_service.service.OtpService;
+import com.carwash.auth_service.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-    @RestController
-    @RequestMapping("/auth")
-    public class AuthController {
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
+@Slf4j
+public class AuthController {
 
-        private final FirebaseTokenVerifier tokenVerifier;
-        private final UserService userService;
-        private final JwtUtil jwtUtil;
+    private final OtpService otpService;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
 
-        public AuthController(FirebaseTokenVerifier tokenVerifier,
-                              UserService userService, JwtUtil jwtUtil) {
-            this.tokenVerifier = tokenVerifier;
-            this.userService = userService;
-            this.jwtUtil = jwtUtil;
-        }
+    /**
+     * Send OTP to phone number
+     *
+     * POST /auth/send-otp
+     * Body: {"phoneNumber": "9876543210"}
+     */
+    @PostMapping("/send-otp")
+    public ResponseEntity<OtpResponse> sendOtp(@Valid @RequestBody OtpRequest request) {
+        log.info("Sending OTP to phone: {}", request.getPhoneNumber());
+        OtpResponse response = otpService.sendOtp(request.getPhoneNumber());
 
-//        @PostMapping("/login")
-//        public UserResponse login(@RequestBody AuthRequest request) {
-//
-//            FirebaseToken token = tokenVerifier.verify(request.getFirebaseToken());
-//
-//            String phone = (String) token.getClaims().get("phone_number");
-//
-//            System.out.println("Phone number from token" +phone );
-//            System.out.println("Token"+ token.getClaims().toString());
-//            if (phone == null) {
-//                throw new RuntimeException("Phone number not found in Firebase token");
-//            }
-//
-//            return userService.getUserByPhone(phone);
-//        }
-
-        @PostMapping("/login")
-        public AuthResponse login(@RequestBody AuthRequest request) {
-
-            // 1️⃣ Verify Firebase token
-            FirebaseToken token = tokenVerifier.verify(request.getFirebaseToken());
-
-            String phone = (String) token.getClaims().get("phone_number");
-
-            System.out.println("Phone number" + phone );
-
-            if (phone == null) {
-                throw new RuntimeException("Phone number not found in Firebase token");
-            }
-
-            // 2️⃣ Login or auto-register user
-            User user = userService.loginOrRegister(phone);
-
-
-
-            // 3️⃣ Generate JWT
-            String jwt = jwtUtil.generateToken(user.getId(), user.getPhoneNumber());
-
-            // 4️⃣ Return JWT
-            return new AuthResponse(jwt, user.getPhoneNumber());
-        }
-
-
+        HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
+
+    /**
+     * Verify OTP and login/register user
+     *
+     * POST /auth/verify-otp
+     * Body: {"phoneNumber": "9876543210", "otp": "123456"}
+     */
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@Valid @RequestBody OtpVerifyRequest request) {
+        log.info("Verifying OTP for phone: {}", request.getPhoneNumber());
+
+        String PhoneNumber = request.getPhoneNumber().toString();
+
+        String Otp = request.getOtp().toString();
+
+        log.info("PhoneNumber: {}", PhoneNumber);
+
+        log.info("Otp: {}", Otp);
+
+        // Verify OTP
+        OtpResponse otpResponse = otpService.verifyOtp(
+                request.getPhoneNumber(),
+                request.getOtp()
+        );
+
+        if (!otpResponse.isSuccess()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(otpResponse);
+        }
+
+        // Get or create user
+        User user = userService.getOrCreateUser(PhoneNumber);
+
+        // Generate JWT token
+        String token = jwtUtil.generateToken(user.getId(), request.getPhoneNumber());
+
+        // Return auth response
+        AuthResponse authResponse = new AuthResponse(token, request.getPhoneNumber());
+        return ResponseEntity.ok(authResponse);
+    }
+
+    /**
+     * Resend OTP
+     *
+     * POST /auth/resend-otp
+     * Body: {"phoneNumber": "9876543210"}
+     */
+    @PostMapping("/resend-otp")
+    public ResponseEntity<OtpResponse> resendOtp(@Valid @RequestBody OtpRequest request) {
+        log.info("Resending OTP to phone: {}", request.getPhoneNumber());
+        OtpResponse response = otpService.resendOtp(request.getPhoneNumber());
+
+        HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
+    }
+
+    /**
+     * Health check endpoint
+     */
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Auth Service is running");
+    }
+}

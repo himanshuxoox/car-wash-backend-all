@@ -11,4 +11,6 @@ public interface UserService {
     UserResponse getUserByPhone(String phoneNumber);
 
     User loginOrRegister(String phone);
+
+    User getOrCreateUser(String phone);
 }

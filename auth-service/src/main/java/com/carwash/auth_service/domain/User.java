@@ -27,6 +27,13 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public User(Object o, String phone, Object o1) {
+    }
+
+    public User() {
+
+    }
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();

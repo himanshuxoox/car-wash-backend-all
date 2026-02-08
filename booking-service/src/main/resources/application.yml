@@ -6,9 +6,9 @@ spring:
     name: booking-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/carwash_booking
+    username: postgres
+    password: himanshu
     driver-class-name: org.postgresql.Driver
 
   jpa:

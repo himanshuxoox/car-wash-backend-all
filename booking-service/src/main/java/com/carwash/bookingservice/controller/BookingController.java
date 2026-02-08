@@ -5,6 +5,7 @@ import com.carwash.bookingservice.service.BookingService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/bookings")
@@ -33,5 +34,15 @@ public class BookingController {
         return bookingService.CreateBooking(booking);
 
 
+    }
+
+    @PutMapping("/{id}/confirm")
+    public Booking confirmBooking(@PathVariable UUID id) {
+        return bookingService.confirmBooking(id);
+    }
+
+    @PutMapping("/{id}/complete")
+    public Booking completeBooking(@PathVariable UUID    id) {
+        return bookingService.completeBooking(id);
     }
 }

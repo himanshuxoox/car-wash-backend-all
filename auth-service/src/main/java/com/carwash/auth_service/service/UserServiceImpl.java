@@ -4,9 +4,11 @@ import com.carwash.auth_service.domain.User;
 import com.carwash.auth_service.dto.CreateUserRequest;
 import com.carwash.auth_service.dto.UserResponse;
 import com.carwash.auth_service.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
 
 
@@ -48,6 +50,19 @@ public class UserServiceImpl implements UserService{
     }
 
     public User loginOrRegister(String phone) {
+        return userRepository.findByPhoneNumber(phone)
+                .orElseGet(() -> {
+                    User user = new User();
+                    user.setPhoneNumber(phone);
+                    return userRepository.save(user);
+                });
+    }
+
+
+    @Override
+    public User getOrCreateUser(String phone) {
+
+        log.info("inside the getOrCreateUser ", phone);
         return userRepository.findByPhoneNumber(phone)
                 .orElseGet(() -> {
                     User user = new User();

@@ -1,1 +1,2 @@
 auth-service/src/main/resources/firebase-admin.json
+*.yml

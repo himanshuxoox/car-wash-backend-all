@@ -1,19 +1,80 @@
 spring:
+  application:
+    name: auth-service
+
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/carwash_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:himanshu}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-server:
-  port: 8081
+  # Redis Configuration for OTP Storage
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 60000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
 
+server:
+  port: ${SERVER_PORT:8081}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# JWT Configuration
 jwt:
-  secret: ZmluYW5jZS1hcHAtamF3dC1zZWNyZXQtbXlzaWduYXR1cmU=
-  expiration: 86400000 # 1 day
+  secret: ${JWT_SECRET:ZmluYW5jZS1hcHAtamF3dC1zZWNyZXQtbXlzaWduYXR1cmU=}
+  expiration: 86400000 # 1 day in milliseconds
+
+# Fast2SMS Configuration
+fast2sms:
+  api-key: ${FAST2SMS_API_KEY:NjF6DVvOMIOs47d8TGnNRHgbKTNbRJNLfwb93VYXEHFMIkASUEZCtMxGMVDG}
+  api-url: ${FAST2SMS_API_URL:https://www.fast2sms.com/dev/bulkV2}
+
+# OTP Configuration
+otp:
+  length: 6
+  expiration-minutes: 5
+  max-attempts: 3
+  rate-limit-minutes: 1
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.carwash.auth_service: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Management Endpoints (Actuator)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

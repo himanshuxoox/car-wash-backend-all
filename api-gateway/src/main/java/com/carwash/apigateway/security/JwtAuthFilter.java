@@ -25,6 +25,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getPath().toString();
 
+        // Public endpoints
         if (path.startsWith("/auth")) {
             return chain.filter(exchange);
         }
@@ -41,18 +42,21 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         String token = authHeader.substring(7);
 
         try {
-            Claims claims = jwtUtil.validateToken(token);
+            // ✅ Validate
+            jwtUtil.validateToken(token);
 
+            // ✅ Extract info
+            String userId = jwtUtil.extractUserId(token);
+            String phone = jwtUtil.extractPhone(token);
+
+            // ✅ Forward to downstream services
             ServerHttpRequest mutatedRequest = exchange.getRequest()
                     .mutate()
-                    .header("X-User-Phone", claims.getSubject())
+                    .header("X-User-Id", userId)
+                    .header("X-User-Phone", phone)
                     .build();
 
-            ServerWebExchange mutatedExchange = exchange.mutate()
-                    .request(mutatedRequest)
-                    .build();
-
-            return chain.filter(mutatedExchange);
+            return chain.filter(exchange.mutate().request(mutatedRequest).build());
 
         } catch (Exception e) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -60,9 +64,8 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         }
     }
 
-
     @Override
     public int getOrder() {
-        return -1; // high priority
+        return -1;
     }
 }

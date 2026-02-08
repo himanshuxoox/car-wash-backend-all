@@ -10,6 +10,12 @@ import java.util.UUID;
 @Table(name = "bookings")
 public class Booking {
 
+    public enum BookingStatus {
+        CREATED,
+        CONFIRMED,
+        COMPLETED
+    }
+
     @Id
     @GeneratedValue
     private UUID id;
@@ -26,6 +32,11 @@ public class Booking {
     private String address;
 
 
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BookingStatus status;
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -41,7 +52,13 @@ public class Booking {
 
 
 
+    public BookingStatus getStatus() {
+        return status;
+    }
 
+    public void setStatus(BookingStatus status) {
+        this.status = BookingStatus.CREATED;
+    }
 
     public LocalDateTime getBookingTime() {
         return bookingTime;

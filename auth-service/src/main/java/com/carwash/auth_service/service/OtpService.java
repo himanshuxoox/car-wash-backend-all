@@ -152,11 +152,11 @@ public class OtpService {
 
             // Build request
             Request request = new Request.Builder()
-                    .url(fast2SmsConfig.getApiUrl())
-                   // .url("https://www.fast2sms.com/dev/bulkV2")
+                    //.url(fast2SmsConfig.getApiUrl())
+                   .url("https://www.fast2sms.com/dev/bulkV2")
                     .post(body)
-                    .addHeader("authorization", fast2SmsConfig.getApiKey())
-                   // .addHeader("authorization","NjF6DVvOMIOs47d8TGnNRHgbKTNbRJNLfwb93VYXEHFMIkASUEZCtMxGMVDG")
+                    //.addHeader("authorization", fast2SmsConfig.getApiKey())
+                    .addHeader("authorization","NjF6DVvOMIOs47d8TGnNRHgbKTNbRJNLfwb93VYXEHFMIkASUEZCtMxGMVDG")
                     .addHeader("Content-Type", "application/json")
                     .addHeader("Cache-Control", "no-cache")
                     .build();

@@ -25,9 +25,24 @@ spring:
           uri: http://booking-service:8083
           predicates:
             - Path=/bookings/**
+# Logging Configuration
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
+    root: INFO
+    com.carwash.apigateway: DEBUG
 
+    # Gateway Logging
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    reactor.netty: DEBUG
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{36}) - %msg%n"
+
+  file:
+    name: logs/api-gateway.log
+    max-size: 10MB
+    max-history: 30
 jwt:
   secret: ZmluYW5jZS1hcHAtamF3dC1zZWNyZXQtbXlzaWduYXR1cmU=

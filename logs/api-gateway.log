@@ -1,0 +1,38 @@
+2026-02-14T17:34:45.133+05:30  INFO 8136 --- [api-gateway] [main] c.c.apigateway.ApiGatewayApplication     : Starting ApiGatewayApplication using Java 17.0.1 with PID 8136 (C:\Users\himan\OneDrive\Desktop\SpringBoot\car-wash-backend\api-gateway\target\classes started by himan in C:\Users\himan\OneDrive\Desktop\SpringBoot\car-wash-backend)
+2026-02-14T17:34:45.137+05:30 DEBUG 8136 --- [api-gateway] [main] c.c.apigateway.ApiGatewayApplication     : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-02-14T17:34:45.140+05:30  INFO 8136 --- [api-gateway] [main] c.c.apigateway.ApiGatewayApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-02-14T17:34:47.349+05:30  INFO 8136 --- [api-gateway] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=4adc6117-c8b2-381d-a8d2-c6cc9311fe98
+2026-02-14T17:34:47.681+05:30 DEBUG 8136 --- [api-gateway] [main] reactor.netty.tcp.TcpResources           : [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=12, workerCount=12}
+2026-02-14T17:34:47.683+05:30 DEBUG 8136 --- [api-gateway] [main] reactor.netty.tcp.TcpResources           : [http] resources will use the default ConnectionProvider: reactor.netty.resources.DefaultPooledConnectionProvider@79c5460e
+2026-02-14T17:34:48.855+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.gateway.config.GatewayProperties   : Routes supplied from Gateway Properties: [RouteDefinition{id='auth-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auth/**}}], filters=[], uri=http://localhost:8081, order=0, metadata={}}, RouteDefinition{id='user-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/users/**}}], filters=[], uri=http://user-service:8082, order=0, metadata={}}, RouteDefinition{id='booking-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/bookings/**}}], filters=[], uri=http://booking-service:8083, order=0, metadata={}}]
+2026-02-14T17:34:49.260+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-02-14T17:34:49.261+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-02-14T17:34:49.261+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-02-14T17:34:49.261+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-02-14T17:34:49.262+05:30  INFO 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-02-14T17:34:49.596+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.w.r.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-02-14T17:34:50.077+05:30  INFO 8136 --- [api-gateway] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2026-02-14T17:34:50.177+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.w.r.r.m.a.ControllerMethodResolver   : ControllerAdvice beans: none
+2026-02-14T17:34:50.569+05:30 DEBUG 8136 --- [api-gateway] [main] r.netty.resources.DefaultLoopIOUring     : Default io_uring support : false
+2026-02-14T17:34:50.639+05:30 DEBUG 8136 --- [api-gateway] [main] r.netty.resources.DefaultLoopEpoll       : Default Epoll support : false
+2026-02-14T17:34:50.640+05:30 DEBUG 8136 --- [api-gateway] [main] r.netty.resources.DefaultLoopKQueue      : Default KQueue support : false
+2026-02-14T17:34:50.868+05:30 DEBUG 8136 --- [api-gateway] [reactor-http-nio-1] r.netty.transport.ServerTransport        : [b1550d67, L:/[0:0:0:0:0:0:0:0]:8080] Bound new server
+2026-02-14T17:34:50.871+05:30  INFO 8136 --- [api-gateway] [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080
+2026-02-14T17:34:51.205+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : RouteDefinition auth-service applying {_genkey_0=/auth/**} to Path
+2026-02-14T17:34:51.247+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : RouteDefinition matched: auth-service
+2026-02-14T17:34:51.248+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : RouteDefinition user-service applying {_genkey_0=/users/**} to Path
+2026-02-14T17:34:51.251+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : RouteDefinition matched: user-service
+2026-02-14T17:34:51.252+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : RouteDefinition booking-service applying {_genkey_0=/bookings/**} to Path
+2026-02-14T17:34:51.255+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.r.RouteDefinitionRouteLocator    : RouteDefinition matched: booking-service
+2026-02-14T17:34:51.267+05:30 DEBUG 8136 --- [api-gateway] [main] o.s.c.g.filter.GatewayMetricsFilter      : New routes count: 3
+2026-02-14T17:34:51.273+05:30  INFO 8136 --- [api-gateway] [main] c.c.apigateway.ApiGatewayApplication     : Started ApiGatewayApplication in 7.397 seconds (process running for 8.321)
+2026-02-14T18:19:35.134+05:30 DEBUG 8136 --- [api-gateway] [SpringApplicationShutdownHook] r.netty.transport.ServerTransport        : [b1550d67, L:/[0:0:0:0:0:0:0:0]:8080] Server is about to be disposed with timeout: PT3S

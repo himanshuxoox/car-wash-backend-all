@@ -59,16 +59,34 @@ otp:
   max-attempts: 3
   rate-limit-minutes: 1
 
-# Logging
+# Logging Configuration
 logging:
   level:
     root: INFO
     com.carwash.auth_service: DEBUG
-    org.springframework.security: DEBUG
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
+    # HTTP Request/Response Logging
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation: TRACE
+
+    # Spring Security Logging
+    org.springframework.security: DEBUG
+
+    # Database Query Logging
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+    # Redis Logging
+    org.springframework.data.redis: DEBUG
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{36}) - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+
+  file:
+    name: logs/auth-service.log
+    max-size: 10MB
+    max-history: 30
 # Management Endpoints (Actuator)
 management:
   endpoints:

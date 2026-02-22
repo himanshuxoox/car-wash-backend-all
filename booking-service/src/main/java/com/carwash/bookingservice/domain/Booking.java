@@ -1,105 +1,71 @@
 package com.carwash.bookingservice.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "bookings")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
 
-    public enum BookingStatus {
-        CREATED,
-        CONFIRMED,
-        COMPLETED
-    }
-
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)  // Add explicit column mapping
+    private Long id;
 
     @Column(nullable = false)
-    private String userPhone;
-
+    private String phoneNumber;
 
     @Column(nullable = false)
-    private String serviceType; // basic,permium ,etc
+    private String userName;
 
-    private LocalDateTime bookingTime;
+    @Column(nullable = false)
+    private String serviceType; // BASIC_WASH, PREMIUM_WASH, INTERIOR_CLEAN, FULL_SERVICE
 
-    private String address;
+    @Column(nullable = false)
+    private Double price;
 
+    private LocalDateTime scheduledDateTime;
 
-
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    private BookingStatus status = BookingStatus.PENDING;
+
+    // Address details
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private String postalCode;
+    private Double latitude;
+    private Double longitude;
+
+    // Vehicle details (optional)
+    private String vehicleType;
+    private String vehicleNumber;
+
+    // Additional info
+    private String specialInstructions;
+
     @Column(nullable = false)
-    private BookingStatus status;
+    private LocalDateTime createdAt;
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "id=" + id +
-                ", userPhone='" + userPhone + '\'' +
-                ", serviceType='" + serviceType + '\'' +
-                ", bookingTime=" + bookingTime +
-                ", address='" + address + '\'' +
-                ", bookingTime=" + bookingTime +
-                ", address='" + address + '\'' +
-                '}';
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-
-
-    public BookingStatus getStatus() {
-        return status;
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
-
-    public void setStatus(BookingStatus status) {
-        this.status = BookingStatus.CREATED;
-    }
-
-    public LocalDateTime getBookingTime() {
-        return bookingTime;
-    }
-
-    public void setBookingTime(LocalDateTime bookingTime) {
-        this.bookingTime = bookingTime;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getUserPhone() {
-        return userPhone;
-    }
-
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
-
 }

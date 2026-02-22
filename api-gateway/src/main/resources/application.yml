@@ -21,8 +21,8 @@ spring:
             - Path=/users/**
 
         - id: booking-service
-         # uri: http://localhost:8083
-          uri: http://booking-service:8083
+          uri: http://localhost:8083
+          #uri: http://booking-service:8083
           predicates:
             - Path=/bookings/**
 # Logging Configuration

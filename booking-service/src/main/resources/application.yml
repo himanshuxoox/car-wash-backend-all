@@ -5,10 +5,11 @@ spring:
   application:
     name: booking-service
 
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/carwash_booking
-    username: postgres
-    password: himanshu
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/carwash_booking}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:himanshu}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -20,8 +21,11 @@ spring:
         format_sql: true
 
 
+# Logging
 logging:
   level:
-    org:
-      springframework:
-        web: DEBUG
+    root: INFO
+    com.carwash.bookingservice: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG

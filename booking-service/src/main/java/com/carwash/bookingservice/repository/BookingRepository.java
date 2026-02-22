@@ -1,13 +1,21 @@
 package com.carwash.bookingservice.repository;
 
-
 import com.carwash.bookingservice.domain.Booking;
+import com.carwash.bookingservice.domain.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
-public interface BookingRepository extends JpaRepository<Booking, UUID> {
+@Repository
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findByUserPhone(String userPhone);
+    List<Booking> findByPhoneNumberOrderByCreatedAtDesc(String phoneNumber);
+
+    List<Booking> findByPhoneNumberAndStatusOrderByCreatedAtDesc(String phoneNumber, BookingStatus status);
+
+    List<Booking> findByScheduledDateTimeBetween(LocalDateTime start, LocalDateTime end);
+
+    long countByPhoneNumberAndStatus(String phoneNumber, BookingStatus status);
 }

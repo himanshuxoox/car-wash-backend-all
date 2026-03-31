@@ -790,7 +790,7 @@ Contributions are welcome! Please follow these steps:
 
 ## 👥 Authors
 
-- **Himanshu Singh** - *Initial work* - [@himanshusingh](https://github.com/yourusername)
+- **Himanshu Singh** - *Initial work* - [@himanshusingh](https://github.com/himanshuxoox)
 
 ---
 
@@ -805,7 +805,7 @@ Contributions are welcome! Please follow these steps:
 
 ## 📞 Support
 
-For support, email himanshu@example.com or open an issue on GitHub.
+For support, email himanshusingh1768@gmail.com or open an issue on GitHub.
 
 ---
 
